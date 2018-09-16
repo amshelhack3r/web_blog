@@ -1,18 +1,31 @@
 const express = require('express');
-const mongoose = require('moongoose');
+const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const mlab = require("./config/keys").mlab;
+const bodyParser = require("body-parser");
 const app = express();
 
-mongoose.connect(mlab)
+//create a connection to mlabs
+mongoose.connect(mlab, {
+        useNewUrlParser: true
+    })
     .then(() => console.log("connected to mlabs"))
     .catch(err => console.log(err));
 
+//handlebars middlewares
 app.engine('handlebars', exphbs({
     defaultLayout: 'template'
 }));
 app.set('view engine', 'handlebars');
 
+//body parser middlewares
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
+
+// parse application/json
+app.use(bodyParser.json())
 
 //require the routes we have created
 const root = require("./routes/index");
