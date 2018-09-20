@@ -1,6 +1,7 @@
 <div class="card card-body">
     <h3>EDIT POST</h3>
-    <form action="/post/update_post" method="POST">
+    <form action="/post/{{single_post.id}}?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
         <div class="form-group">
             <label for="formGroupExampleInput">Post Title</label>
             <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{single_post.title}}">
