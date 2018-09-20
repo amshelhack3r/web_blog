@@ -39,6 +39,7 @@ router.post("/insert_post", (req, res) => {
     new_post
       .save()
       .then(post => {
+        req.flash('success_msg', "Post added succesfully")
         res.redirect("/post");
       })
       .catch(err => console.log(err));
@@ -51,18 +52,35 @@ router.get("/add", (req, res) => {
 
 router.get("/edit/:id", (req, res) => {
   Post.findById({
-    _id: req.params.id
-  })
+      _id: req.params.id
+    })
     .then(single_post => {
-      res.render("editpost", { single_post });
+      res.render("editpost", {
+        single_post
+      });
     })
 
     .catch(err => console.log(err));
 });
 
-router.post("/update_post", (req, res) => {
-  Post.findOneAndUpdate(req.body.id, req.body);
-  res.redirect("/post");
+router.put("/:id", (req, res) => {
+  Post.findByIdAndUpdate(req.params.id, req.body)
+    .then(post => {
+      post.save()
+      req.flash('success_msg', "Post Edited succesfully")
+        .then(res.redirect("/post"))
+    })
+
 });
+
+router.delete("/:id", (req, res) => {
+  Post.deleteOne({
+      _id: req.params.id
+    })
+    .then(() => {
+      req.flash('error_msg', "Post  Deleted")
+      res.redirect("/post")
+    })
+})
 
 module.exports = router;
