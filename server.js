@@ -1,8 +1,11 @@
+const methodOverride = require("method-override");
 const express = require('express');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const mlab = require("./config/keys").mlab;
 const bodyParser = require("body-parser");
+const flash = require("connect-flash");
+const session = require('express-session')
 const app = express();
 
 //create a connection to mlabs
@@ -18,6 +21,10 @@ app.engine('handlebars', exphbs({
 }));
 app.set('view engine', 'handlebars');
 
+
+//method override middleware
+app.use(methodOverride('_method'))
+
 //body parser middlewares
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
@@ -27,6 +34,21 @@ app.use(bodyParser.urlencoded({
 // parse application/json
 app.use(bodyParser.json())
 
+app.use(flash());
+
+//sessions middlewares
+app.use(session({
+    secret: "nigga",
+    resave: true,
+    saveUninitialized: true
+}))
+
+//Global variables 
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success_msg");
+    res.locals.error = req.flash("error_msg");
+    next();
+})
 //require the routes we have created
 const root = require("./routes/index");
 const about = require("./routes/about");
