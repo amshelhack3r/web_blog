@@ -2,17 +2,22 @@ const methodOverride = require("method-override");
 const express = require("express");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
-const mlab = require("./config/keys").mlab;
+const keys = require("./config/keys");
 const bodyParser = require("body-parser");
 const flash = require("connect-flash");
 const session = require("express-session");
 const path = require("path");
+const passport = require("passport");
+const cookie = require('cookie-parser');
+
+
 const app = express();
+require('./config/passport')(passport);
 
 //create a connection to mlabs
 mongoose
   .connect(
-    mlab, {
+    keys.mlab, {
       useNewUrlParser: true
     }
   )
@@ -31,6 +36,7 @@ app.set("view engine", "handlebars");
 //method override middleware
 app.use(methodOverride("_method"));
 
+
 //body parser middlewares
 // parse application/x-www-form-urlencoded
 app.use(
@@ -38,27 +44,31 @@ app.use(
     extended: false
   })
 );
-
 // parse application/json
 app.use(bodyParser.json());
-
-app.use(flash());
 
 //set the path to the public directory
 app.use(express.static(path.join(__dirname, "public")));
 //sessions middlewares
 app.use(
   session({
-    secret: "nigga",
+    secret: keys.secret,
     resave: true,
     saveUninitialized: true
   })
 );
 
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session())
+app.use(cookie());
+
 //Global variables
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success_msg");
-  res.locals.error = req.flash("error_msg");
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
   next();
 });
 
