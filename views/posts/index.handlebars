@@ -1,0 +1,11 @@
+{{#each allposts}}
+<div class="card card-body mb-3">
+    <h3>{{title}}</h3>
+    <p>{{details}}</p>
+    <a class="btn btn-warning btn-block mb-3" href="/post/edit/{{id}}">Edit</a>
+    <form action="/post/{{id}}?_method=DELETE" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="DELETE" class="btn btn-danger btn-block">
+    </form>
+</div>
+{{/each}}

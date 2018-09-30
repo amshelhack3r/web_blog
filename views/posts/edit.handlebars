@@ -1,0 +1,15 @@
+<div class="card card-body">
+    <h3>EDIT POST</h3>
+    <form action="/post/{{single_post.id}}?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group">
+            <label for="formGroupExampleInput">Post Title</label>
+            <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{single_post.title}}">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Write Post</label>
+            <textarea class="form-control" name="details" rows="3">{{single_post.details}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-warning">UPDATE</button>
+    </form>
+</div>
