@@ -5,7 +5,7 @@ const {
 } = require('../auth/auth');
 
 
-router.get('/', checklogin, (req, res) => {
+router.get('/', (req, res) => {
     res.render("index");
 });
 
