@@ -12,8 +12,13 @@ const PostModel = new Schema({
     },
     post_date: {
         type: Date,
-        Default: Date.now
+        Default: Date()
+    },
+    id: {
+        type: String,
+        required: true
     }
+
 })
 
 
