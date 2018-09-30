@@ -5,7 +5,7 @@ const Post = require("../models/Post");
 router.get("/", (req, res) => {
   Post.find({})
     .then(allposts => {
-      res.render("posts", {
+      res.render("posts/index", {
         allposts
       });
     })
@@ -27,7 +27,7 @@ router.post("/insert_post", (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render("addpost", {
+    res.render("posts/add", {
       errors,
       title: req.body.title,
       details: req.body.details
@@ -47,7 +47,7 @@ router.post("/insert_post", (req, res) => {
 });
 
 router.get("/add", (req, res) => {
-  res.render("addpost");
+  res.render("posts/add");
 });
 
 router.get("/edit/:id", (req, res) => {
@@ -55,7 +55,7 @@ router.get("/edit/:id", (req, res) => {
       _id: req.params.id
     })
     .then(single_post => {
-      res.render("editpost", {
+      res.render("posts/edit", {
         single_post
       });
     })
