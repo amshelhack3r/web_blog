@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const {
+    checklogin
+} = require('../auth/auth');
 
 
-router.get('/', (req, res) => {
+router.get('/', checklogin, (req, res) => {
     res.render("index");
 });
 
