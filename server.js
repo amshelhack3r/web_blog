@@ -8,16 +8,16 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const path = require("path");
 const passport = require("passport");
-const cookie = require('cookie-parser');
-
+const cookie = require("cookie-parser");
 
 const app = express();
-require('./config/passport')(passport);
+require("./config/passport")(passport);
 
 //create a connection to mlabs
 mongoose
   .connect(
-    keys.mlab, {
+    keys.mlab,
+    {
       useNewUrlParser: true
     }
   )
@@ -28,6 +28,9 @@ mongoose
 app.engine(
   "handlebars",
   exphbs({
+    helpers: {
+      rootpath: keys.rootpath
+    },
     defaultLayout: "template"
   })
 );
@@ -35,7 +38,6 @@ app.set("view engine", "handlebars");
 
 //method override middleware
 app.use(methodOverride("_method"));
-
 
 //body parser middlewares
 // parse application/x-www-form-urlencoded
@@ -60,7 +62,7 @@ app.use(
 
 app.use(flash());
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
 app.use(cookie());
 
 //Global variables
@@ -78,10 +80,10 @@ const about = require("./routes/about");
 const post = require("./routes/post");
 const user = require("./routes/users");
 
-app.use("/", root);
-app.use("/about", about);
-app.use("/post", post);
-app.use("/users", user);
+app.use(keys.rootpath, root);
+app.use(`${keys.rootpath}/about`, about);
+app.use(`${keys.rootpath}/post`, post);
+app.use(`${keys.rootpath}/users`, user);
 
 const port = process.env.PORT || 4000;
 
