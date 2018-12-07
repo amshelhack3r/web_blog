@@ -11,6 +11,7 @@ const passport = require("passport");
 const cookie = require("cookie-parser");
 
 const app = express();
+global.rootpath = keys.rootpath;
 require("./config/passport")(passport);
 
 //create a connection to mlabs
