@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4 ">
-    <a class="navbar-brand" href="/">MUTALL WEB</a>
+    <a class="navbar-brand" href="{{rootpath}}">MUTALL WEB</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,11 +8,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item ">
-                <a class="nav-link" href="/">Home
+                <a class="nav-link" href="{{rootpath}}">Home
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="/about">About
+                <a class="nav-link" href="{{rootpath}}/about">About
                 </a>
             </li>
         </ul>
@@ -21,19 +21,19 @@
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdownMenuLink">POSTS</a>
                 <div class="dropdown-menu">
-                    <a href="/post" class="dropdown-item">Posts</a>
-                    <a href="/post/add" class="dropdown-item">Add POST</a>
+                    <a href="{{rootpath}}/post" class="dropdown-item">Posts</a>
+                    <a href="{{rootpath}}/post/add" class="dropdown-item">Add POST</a>
                 </div>
             </li>
             <li class="nav-item">
-                <a href="/users/logout" class="nav-link">Logout</a>
+                <a href="{{rootpath}}/users/logout" class="nav-link">Logout</a>
             </li>
             {{else}}
             <li class="nav-item">
-                <a href="/users/login" class="nav-link">Login</a>
+                <a href="{{rootpath}}/users/login" class="nav-link">Login</a>
             </li>
             <li class="nav-item">
-                <a href="/users/register" class="nav-link">Register</a>
+                <a href="{{rootpath}}/users/register" class="nav-link">Register</a>
             </li>
             {{/if}}
         </ul>
